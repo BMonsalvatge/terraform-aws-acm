@@ -29,14 +29,12 @@ resource "aws_acm_certificate" "env_acm_cert" {
 }
 
 data "aws_route53_zone" "zone" {
-  provider     = "aws.dns"
   name         = "${var.domain}."
   private_zone = false
 }
 
 resource "aws_route53_record" "cert_validation" {
   count    = "${var.environment == "production" ? 1 : 0}"
-  provider = "aws.dns"
   name     = "${aws_acm_certificate.acm_cert.domain_validation_options.0.resource_record_name}"
   type     = "${aws_acm_certificate.acm_cert.domain_validation_options.0.resource_record_type}"
   zone_id  = "${data.aws_route53_zone.zone.id}"
@@ -46,7 +44,6 @@ resource "aws_route53_record" "cert_validation" {
 
 resource "aws_route53_record" "env_cert_validation" {
   count    = "${var.environment == "production" ? 0 : 1}"
-  provider = "aws.dns"
   name     = "${aws_acm_certificate.env_acm_cert.domain_validation_options.0.resource_record_name}"
   type     = "${aws_acm_certificate.env_acm_cert.domain_validation_options.0.resource_record_type}"
   zone_id  = "${data.aws_route53_zone.zone.id}"
