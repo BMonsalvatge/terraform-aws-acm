@@ -37,7 +37,7 @@ jobs:
       - save_cache:
           key: dep-{{ checksum "test/Gopkg.lock" }}
           paths:
-            - $HOME/.go_workspace/src/github.com/hashicorp/terraform-aws-vault/test/vendor
+            - $HOME/.go_workspace/src/github.com/rockinoutt/terraform-aws-acm/test/vendor
       - run: mkdir -p /tmp/logs
       - run: run-go-tests --path test | tee /tmp/logs/all.log
       - run:
