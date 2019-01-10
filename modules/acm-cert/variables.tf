@@ -23,7 +23,7 @@ variable "domain" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "environment" {
-  description = ""
+  description = "Specify the environment the certificate is for.  Also goes before domain in the URL.  Ex: default.domain.com"
   default = "default"
 }
 
