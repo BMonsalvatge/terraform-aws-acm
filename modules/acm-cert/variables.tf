@@ -22,6 +22,12 @@ variable "domain" {
 # These parameters have reasonable defaults.
 # ---------------------------------------------------------------------------------------------------------------------
 
+variable "wildcard" {
+  description = "If not specified, or set to STRING of true then a wildcard is use for your base domain and environment if enabled.  Set to anything else to disable."
+  default = "true"
+}
+
+
 variable "environment" {
   description = "Specify the environment the certificate is for.  Also goes before domain in the URL.  Ex: default.domain.com"
   default = "default"

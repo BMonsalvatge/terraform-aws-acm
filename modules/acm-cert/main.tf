@@ -1,6 +1,14 @@
+locals {
+  combined_domain = "${var.environment}.${var.domain}"
+
+  wildcard = "${var.wildcard == "true" ? "*.${var.domain}" : var.domain}"
+  wildcard_env = "${var.wildcard == "true" ? "*.${local.combined_domain}" : local.combined_domain}"
+}
+
+
 resource "aws_acm_certificate" "acm_cert" {
   count             = "${var.environment == "default" ? 1 : 0}"
-  domain_name       = "*.${var.domain}"
+  domain_name       = "${local.wildcard}"
   validation_method = "${var.validation_method}"
 
   tags {
@@ -15,7 +23,7 @@ resource "aws_acm_certificate" "acm_cert" {
 
 resource "aws_acm_certificate" "env_acm_cert" {
   count             = "${var.environment == "default" ? 0 : 1}"
-  domain_name       = "*.${var.environment}.${var.domain}"
+  domain_name       = "${local.wildcard_env}"
   validation_method = "${var.validation_method}"
 
   tags {
